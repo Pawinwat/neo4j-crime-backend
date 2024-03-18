@@ -57,13 +57,13 @@ export class MetaService {
     return result.records
   }
 
-  async findNode() {
+  async findNodeType() {
     const query = 'CALL db.labels() YIELD label RETURN label;'
    return this.query(query)
   }
 
 
-  async findRelation(){
+  async findRelationType(){
     const query =`CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType;`
     return this.query(query)
   }
@@ -78,6 +78,18 @@ export class MetaService {
   async findSchema(){
     const query = 'CALL db.schema.visualization()'
     return this.query(query)
+  }
+
+  async searchAllNode (searchText:string){
+    const query = `
+    match (n) 
+    with n, [x in keys(n) WHERE n[x] =~ '.*${searchText}.*'] as doesMatch
+    where size(doesMatch) > 0
+    return n
+    limit 10
+    `
+    return this.query(query)
+
   }
 
 

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { MetaService } from './meta.service';
 import { CreateMetaDto } from './dto/create-meta.dto';
 import { UpdateMetaDto } from './dto/update-meta.dto';
@@ -13,15 +13,15 @@ export class MetaController {
     return this.metaService.findAll();
   }
 
-  @Get('nodes')
+  @Get('node-type')
   findNode() {
-    return this.metaService.findNode();
+    return this.metaService.findNodeType();
   }
 
 
-  @Get('relations')
+  @Get('relation-type')
   findRelation() {
-    return this.metaService.findRelation();
+    return this.metaService.findRelationType();
   }
 
   @Get('relationships')
@@ -32,6 +32,13 @@ export class MetaController {
   @Get('schema')
   findSchema() {
     return this.metaService.findSchema();
+  }
+
+  @Get('search')
+  searchText(
+    @Query('text') text:string
+  ) {
+    return this.metaService.searchAllNode(text);
   }
  
 }
