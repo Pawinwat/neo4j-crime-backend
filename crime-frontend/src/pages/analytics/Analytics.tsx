@@ -1,82 +1,76 @@
 // import React from 'react'
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
-import { Box, Flex, IconButton, Spacer, useColorModeValue, useDisclosure } from "@chakra-ui/react";
-import { useRef } from "react";
+import { ArrowLeftIcon, ArrowRightIcon, Search2Icon, SearchIcon } from "@chakra-ui/icons";
+import { Box, Flex, Grid, GridItem, IconButton, Input, InputGroup, InputLeftElement, Spacer, useColorModeValue, useDisclosure } from "@chakra-ui/react";
+import { useEffect, useRef } from "react";
 import GraphComponent from "../../components/graph/ExampleGraph";
+import RelationSidebar from "./components/Sidebar";
+// import { useRelation } from "./services/api";
 export default function Analytics() {
+
+    // const relation = useRelation()
+    // console.log(relation?.data)
+
+
+
 
 
     const imageWrapperRef = useRef(null);
 
     return (
-        <Box
-            ref={imageWrapperRef}
-            position="relative"
-            flex={'flex-start'}
-            // bgColor={'red'}
-            h="full"
+        // <Box
+        //     ref={imageWrapperRef}
+        //     position="relative"
+        //     flex={'flex-start'}
+        //     // bgColor={'red'}
+        //     h="full"
 
+        // >
+        <Grid
+            templateAreas={`
+            "searchbar sidebar" 
+            "canvas sidebar"`}
+            //   gridTemplateRows={'50px 1fr 30px'}
+            //   gridTemplateColumns={'150px 1fr'}
+            // h='200px'
+            gap='0.5'
+            // h="full"
+
+            // color='blackAlpha.700'
+            fontWeight='bold'
         >
-            <Flex color='white' height={'100%'}>
-
+   
+            <GridItem area={'searchbar'}>
+                <InputGroup m='0.5vw'>
+                    <InputLeftElement
+                        pointerEvents='none'
+                        // fontSize='1.2em'
+                    >
+                        <Search2Icon />
+                    </InputLeftElement>
+                    <Input placeholder='Search...'
+                        maxWidth={'50%'}
+                    />
+                </InputGroup>
+            </GridItem>
+            {/* <Flex color='white' height={'100%'} > */}
+            <GridItem area={'canvas'}>
                 <Box
                     bg={useColorModeValue('white', 'gray.900')}
+                // height={'100%'}
                 >
-
-
-
                     <GraphComponent />
                 </Box>
-                <SidebarWithHeader />
-            </Flex>
+            </GridItem>
+            <GridItem area={'sidebar'}>
+                <RelationSidebar />
+            </GridItem>
 
-        </Box>
+            {/* </Flex> */}
+        </Grid>
+        // </Box>
     )
 }
 
 
 
-const SidebarWithHeader = () => {
-    const { isOpen, onToggle } = useDisclosure()
-
-
-
-    return (
-        <>
-            {/* <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}> */}
-
-            <Spacer />
-
-            <Flex direction="row-reverse" height="100%">
-
-                <Box
-                    id='real-sidebar'
-                    transition="0.11s ease"
-                    bg={useColorModeValue('white', 'gray.900')}
-                    borderRight="1px"
-                    borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-                    w={{ base: 'full', md: isOpen ? '30vw' : 10 }}
-
-                    // style={{display:isOpen?'':'none'}}
-                    // pos="fixed"
-                    height="100%"
-                >
-                    {/* <Flex h="20" alignItems="center" mx="8" justifyContent="space-between"> */}
-                    <IconButton
-                        aria-label={""}
-                        onClick={onToggle}
-                        icon={!isOpen ? <ArrowLeftIcon /> : <ArrowRightIcon />
-                        } />
-                    {/* <CloseButton display={{ base: 'flex', md: 'flex' }}  /> */}
-                    {/* </Flex> */}
-                    {[].map((link: any) => (
-                        <Box key={link.name} >
-                            {link.name}
-                        </Box>
-                    ))}
-                </Box>
-            </Flex>
-        </ >
-    )
-}
 

@@ -47,7 +47,7 @@ const GraphComponent = () => {
         };
     }, []); // Run this effect only once when the component mounts
 
-    return <div id="network" style={{ height: '400px' }}></div>;
+    return <div id="network" style={{ height: '80vh' }}></div>;
 };
 
 export default GraphComponent;
